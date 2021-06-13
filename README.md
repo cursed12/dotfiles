@@ -5,3 +5,4 @@ This repo contains my full Linux setup to supercharge my workflow. The configs i
 2. Qtile WM setup
 3. Compton configuration
 4. gtk 3/4 defaults
+5. bashrc
