@@ -119,9 +119,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+#### CUSTOM SETTINGS ####
+
 # Set default editor as neovim 
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # Remove duplicate config directory if present
 export DUPE="\~/.config/"
@@ -130,13 +132,20 @@ if [ -d "$DUPE" ]; then rm -Rf $DUPE; fi
 # Commands to run at startup
 neofetch
 
+# Function to open a file in it's default app
+# Usage: o /path/to/file
+o ()
+{
+    xdg-open "$1" &
+}
+
 # Set some extra paths
 export PATH=/usr/local/cuda-11.1/bin${PATH:+:${PATH}}
 export PATH=$PATH:~/.local/bin
 
 ## Custom Aliases
 alias bt="bash ~/bluetooth-mic.sh"
-alias o="xdg-open"
+alias nb="jupyter notebook"
 
 alias env-dl="source ~/envs/dl/bin/activate"
 alias env-ga="source ~/envs/ga/bin/activate"
