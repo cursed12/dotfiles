@@ -34,7 +34,6 @@ from libqtile.utils import guess_terminal
 from libqtile import qtile
 from libqtile import hook
 
-
 mod = "mod4"
 
 # Commands for certain apps
@@ -46,6 +45,7 @@ wifi= "nm-connection-editor"
 file_explorer = "nautilus"
 calendar = "gnome-calendar"
 screenshot = "gnome-screenshot"
+spotify = "spotify"
 
 keys = [
     # Switch between windows
@@ -90,20 +90,18 @@ keys = [
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
 
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    # Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "s", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
 
     # Volume
-    Key([], "XF86AudioLowerVolume", lazy.spawn(
-        "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        )),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn(
-    "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        )),
-    Key([], "XF86AudioMute", lazy.spawn(
-    "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-        )),
+    Key([], "XF86AudioLowerVolume", lazy.spawn('amixer -q -D pulse sset Master 5%-')),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn('amixer -q -D pulse sset Master 5%+')),
+    Key([], "XF86AudioMute", lazy.spawn('amixer -q -D pulse sset Master toggle')),
+
+    # Brightness
+    Key([], "XF86MonBrightnessUp", lazy.spawn('brightnessctl -d "intel_backlight" set +5%')),
+    Key([], "XF86MonBrightnessDown", lazy.spawn('brightnessctl -d "intel_backlight" set 5%-')),
 
     # Some default apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
@@ -113,9 +111,9 @@ keys = [
     Key([mod, "shift"], "Print", lazy.spawn(screenshot+" -c -a"), desc="Screenshot Area"),
     Key([mod, "control"], "Print", lazy.spawn(screenshot+" -i"), desc="Screenshot Menu"),
 
-
 ]
 
+# Setting group names
 group_list = ["Code", "Web", "Music", "Mail", "Fun", "What", "Even", "Is", "This"]
 groups = [Group(i) for i in group_list]
 
@@ -162,12 +160,12 @@ layouts = [
          section_fontsize = 13,
          border_width = 2,
          bg_color = "282a36",
-         active_bg = "d3869b",
-         active_fg = "1d2021",
-         inactive_bg = "fe8019",
-         inactive_fg = "282828",
+         active_bg = "ffb86c",
+         active_fg = "282a36",
+         inactive_bg = "6272a4",
+         inactive_fg = "282a36",
          padding_left = 0,
-         padding_x = 0,
+         padding_x = 2,
          padding_y = 5,
          section_top = 10,
          section_bottom = 20,
@@ -175,7 +173,6 @@ layouts = [
          vspace = 3,
          panel_width = 200
          ),
-    layout.Floating(**layout_theme)
 ]
 
 
@@ -213,11 +210,10 @@ widgets_list = [
                        foreground=mycolors["white"],
                        background = mycolors["bg"]
                        ),
-              # widget.Image(
-                       # filename = "~/.config/qtile/icons/python-white.png",
-                       # scale = "False",
-                       # mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)}
-                       # ),
+              widget.Image(
+                       filename = "~/.config/qtile/icons/python.png",
+                       scale = 0.02,
+                       ),
              widget.Sep(
                        linewidth = 0,
                        padding = 6,
@@ -254,7 +250,7 @@ widgets_list = [
                        ),
               widget.Sep(
                        linewidth = 0,
-                       padding = 30,
+                       padding = 20,
                        foreground=mycolors["white"],
                        background = mycolors["bg"]
                        ),
@@ -271,7 +267,7 @@ widgets_list = [
                        # fontsize = 42
                        # ),
               widget.Spacer(
-                       length=440,
+                       length=425,
                        background=mycolors["bg"]
                       ),
               widget.Image(
@@ -299,18 +295,6 @@ widgets_list = [
                        # no_update_string="0 updates"
                        # ),
               widget.Image(
-                       filename = "~/.config/qtile/icons/bluetooth.png",
-                       background = mycolors["bg"],
-                       mouse_callbacks = {"Button1": lambda: qtile.cmd_spawn(bluetooth)},
-                       padding=6,
-                       ),
-             widget.Sep(
-                       linewidth = 3,
-                       padding = 10,
-                       foreground=mycolors["bglight"],
-                       background = mycolors["bg"]
-                       ),
-              widget.Image(
                        filename = "~/.config/qtile/icons/wifi.png",
                        background = mycolors["bg"],
                        mouse_callbacks = {"Button1": lambda: qtile.cmd_spawn(wifi)},
@@ -323,10 +307,35 @@ widgets_list = [
                        rounded=True,
                        padding = 6
                        ),
-              # widget.Systray(
-                       # background = mycolors["bg"],
-                       # padding = 6
-                       # ),
+              widget.Systray(
+                       background = mycolors["bg"],
+                       padding = 6
+                       ),
+             widget.Sep(
+                       linewidth = 3,
+                       padding = 10,
+                       foreground=mycolors["bglight"],
+                       background = mycolors["bg"]
+                       ),
+              widget.Image(
+                       filename = "~/.config/qtile/icons/bluetooth.png",
+                       background = mycolors["bg"],
+                       mouse_callbacks = {"Button1": lambda: qtile.cmd_spawn(bluetooth)},
+                       padding=6,
+                       ),
+             widget.Sep(
+                       linewidth = 0,
+                       padding = 10,
+                       foreground=mycolors["bglight"],
+                       background = mycolors["bg"]
+                       ),
+              widget.Image(
+                       filename = "~/.config/qtile/icons/spotify.png",
+                       background = mycolors["bg"],
+                       mouse_callbacks = {"Button1": lambda: qtile.cmd_spawn(spotify)},
+                       padding=6,
+                       scale=0.5
+                       ),
              widget.Sep(
                        linewidth = 3,
                        padding = 10,
@@ -341,6 +350,7 @@ widgets_list = [
               widget.Volume(
                        foreground = mycolors["orange"],
                        background = mycolors["bg"],
+                       device='pulse',
                        padding = 6
                        ),
              widget.Sep(
@@ -351,7 +361,6 @@ widgets_list = [
                        ),
               widget.CurrentLayout(
                        foreground = mycolors["yellow"],
-                       # background = colors[4],
                        background = mycolors["bg"],
                        padding = 6
                        ),
@@ -368,9 +377,10 @@ widgets_list = [
               widget.Battery(
                        foreground = mycolors["cyan"],
                        background = mycolors["bg"],
-                       format = '{percent:2.0%} {char} Time left: {hour:d}:{min:02d} hrs',
+                       format = '{percent:2.0%} {char}',
                        charge_char="↑",
                        discharge_char="↓",
+                       full_char="~",
                        show_short_text=False,
                        padding=6
                       ),
@@ -435,7 +445,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 main = None  # WARNING: this is deprecated and will be removed soon
 follow_mouse_focus = True
-bring_front_click = False
+bring_front_click = True
 cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -449,7 +459,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='gnome-calendar'),
     Match(wm_class='pavucontrol'),
     Match(wm_class='simplescreenrecorder'),
-    Match(wm_class='org.gnome.Nautilus'),
+    # Match(wm_class='org.gnome.Nautilus'),
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
 ])

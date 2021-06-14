@@ -1,4 +1,11 @@
 #!/bin/sh
-feh --bg-scale ~/Downloads/timon-klauser-3MAmj1ZKSZA-unsplash.jpg &
+
+feh --bg-scale ~/.config/qtile/background.jpg &
+
 nm-applet &
+
 blueman-applet &
+
+compton &
+
+exit 0
