@@ -6,6 +6,8 @@ This repo contains my full Linux setup to supercharge my workflow. The configs i
 3. Compton configuration
 4. gtk 3/4 defaults
 5. bashrc
+5. fish config (sashimi prompt using Oh My Fish! + Dracula theme)
+6. Alacritty config (only font and theme changes)
 
 
 Here are some juicy screenshots
