@@ -36,7 +36,7 @@ from libqtile import hook
 
 mod = "mod4"
 
-# Some useful default apps on the system
+# Commands for certain apps
 # terminal = guess_terminal()
 terminal = "gnome-terminal"
 browser = "firefox"
@@ -430,7 +430,6 @@ screens = [
         top=bar.Bar(
             widgets_list,
             24,
-            opacity=1.0
         ),
     ),
 ]
@@ -466,7 +465,10 @@ floating_layout = layout.Floating(float_rules=[
     # Match(wm_class='org.gnome.Nautilus'),
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
-])
+    ],
+    border_focus=mycolors["dark purple"]
+)
+
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
