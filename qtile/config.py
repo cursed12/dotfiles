@@ -37,8 +37,9 @@ from libqtile import hook
 mod = "mod4"
 
 # Commands for certain apps
-terminal = guess_terminal()
-browser = "brave-browser"
+# terminal = guess_terminal()
+terminal = "gnome-terminal"
+browser = "firefox"
 calc = "gnome-calculator"
 bluetooth = "blueman-manager"
 wifi= "nm-connection-editor"
@@ -46,6 +47,7 @@ file_explorer = "nautilus"
 calendar = "gnome-calendar"
 screenshot = "gnome-screenshot"
 spotify = "spotify"
+search_command = "rofi -show run"
 
 keys = [
     # Switch between windows
@@ -90,9 +92,9 @@ keys = [
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
 
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
-    # Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "s", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
+    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    # Key([mod], "s", lazy.spawncmd(),
+        # desc="Spawn a command using a prompt widget"),
 
     # Volume
     Key([], "XF86AudioLowerVolume", lazy.spawn('amixer -q -D pulse sset Master 5%-')),
@@ -110,6 +112,7 @@ keys = [
     Key([mod], "Print", lazy.spawn(screenshot+" -c"), desc="Screenshot full"),
     Key([mod, "shift"], "Print", lazy.spawn(screenshot+" -c -a"), desc="Screenshot Area"),
     Key([mod, "control"], "Print", lazy.spawn(screenshot+" -i"), desc="Screenshot Menu"),
+    Key([mod], "s", lazy.spawn(search_command), desc="Launch rofi"),
 
 ]
 
@@ -241,13 +244,13 @@ widgets_list = [
                        foreground = mycolors["white"],
                        background = mycolors["bg"]
                        ),
-              widget.Prompt(
-                       prompt = prompt,
-                       font = "Ubuntu",
-                       padding = 10,
-                       foreground = mycolors["red"],
-                       background = mycolors["bg"]
-                       ),
+              # widget.Prompt(
+                       # prompt = prompt,
+                       # font = "Ubuntu",
+                       # padding = 10,
+                       # foreground = mycolors["red"],
+                       # background = mycolors["bg"]
+                       # ),
               widget.Sep(
                        linewidth = 0,
                        padding = 20,
@@ -427,6 +430,7 @@ screens = [
         top=bar.Bar(
             widgets_list,
             24,
+            opacity=1.0
         ),
     ),
 ]
@@ -436,7 +440,7 @@ screens = [
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
+    Drag(["shift"], "Button1", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front())
 ]
