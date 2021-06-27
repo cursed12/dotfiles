@@ -36,7 +36,7 @@ from libqtile import hook
 
 mod = "mod4"
 
-# Commands for certain apps
+# Some useful default apps on the system
 # terminal = guess_terminal()
 terminal = "gnome-terminal"
 browser = "firefox"
