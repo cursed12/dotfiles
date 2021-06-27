@@ -1,3 +1,3 @@
 function o
-    xdg-open $argv &
+    xdg-open 2>/dev/null $argv &
 end
