@@ -109,9 +109,9 @@ keys = [
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "c", lazy.spawn(calc), desc="Launch calculator"),
     Key([mod], "e", lazy.spawn(file_explorer), desc="Launch file explorer"),
-    Key([mod], "Print", lazy.spawn(screenshot+" -c"), desc="Screenshot full"),
+    Key([mod], "Print", lazy.spawn(screenshot+" -i"), desc="Screenshot Menu"),
     Key([mod, "shift"], "Print", lazy.spawn(screenshot+" -c -a"), desc="Screenshot Area"),
-    Key([mod, "control"], "Print", lazy.spawn(screenshot+" -i"), desc="Screenshot Menu"),
+    # Key([mod, "control"], "Print", lazy.spawn(screenshot+" -c"), desc="Screenshot to clipboard"),
     Key([mod], "s", lazy.spawn(search_command), desc="Launch rofi"),
 
 ]
